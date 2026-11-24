@@ -4,6 +4,18 @@ A phone app for one aquaponics greenhouse: a ranchu tank, grow beds, and the pum
 
 The last version did the simulator, the rules, and the accounts in the same pass. Those stay out until a later week. The colors, the logo, and the five screens around the greenhouse are the same.
 
+## Install the APK
+
+`AquaHydro.apk` sits next to this file. It is a debug build for a phone or an emulator, not a Play Store release. The sample greenhouse is packed inside, so the app opens with no server. The anon key is not in the APK. Editing a value in the Supabase console and pressing Refresh is the website, not this file.
+
+On Windows, copy `AquaHydro.apk` to the phone and open it. If Android asks, allow install from that source. On an emulator, drag the file onto the emulator window.
+
+Rebuild it with the Android SDK installed and `ANDROID_HOME` set:
+
+```bash
+npm run apk
+```
+
 ## Run it
 
 ```bash

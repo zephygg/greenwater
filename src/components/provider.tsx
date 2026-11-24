@@ -1,7 +1,15 @@
 "use client";
 
 import { createContext, useCallback, useContext, useEffect, useState, type ReactNode } from "react";
+import { assemble } from "@/data/assemble";
+import { buildSeed } from "@/data/seed";
 import type { Greenhouse } from "@/data/types";
+
+const packedInApp = process.env.NEXT_PUBLIC_APK === "1";
+
+function sampleGreenhouse(): Greenhouse {
+  return assemble(buildSeed(new Date()), "seed");
+}
 
 type Status = "loading" | "ready" | "error";
 
@@ -22,6 +30,13 @@ export function GreenhouseProvider({ children }: { children: ReactNode }) {
   const [refreshing, setRefreshing] = useState(false);
 
   const refresh = useCallback(async () => {
+    if (packedInApp) {
+      setData(sampleGreenhouse());
+      setError(null);
+      setStatus("ready");
+      setRefreshing(false);
+      return;
+    }
     setRefreshing(true);
     try {
       const response = await fetch("/api/greenhouse", { cache: "no-store" });

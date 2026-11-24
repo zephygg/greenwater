@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">AquaHydro</string>
+    <string name="title_activity_main">AquaHydro</string>
+    <string name="package_name">app.aquahydro.greenhouse</string>
+    <string name="custom_url_scheme">app.aquahydro.greenhouse</string>
+</resources>

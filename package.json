@@ -7,9 +7,13 @@
     "build": "next build",
     "start": "next start -p 4317 -H 0.0.0.0",
     "lint": "eslint",
-    "check": "node scripts/check-seed.mts"
+    "check": "node scripts/check-seed.mts",
+    "apk": "bash scripts/build-apk.sh"
   },
   "dependencies": {
+    "@capacitor/android": "^8.6.2",
+    "@capacitor/cli": "^8.6.2",
+    "@capacitor/core": "^8.6.2",
     "@radix-ui/react-slot": "^1.5.0",
     "@supabase/supabase-js": "^2.119.2",
     "class-variance-authority": "^0.7.1",

@@ -17,6 +17,7 @@ export const metadata: Metadata = {
   title: "AquaHydro",
   description: "Monitor one aquaponics greenhouse: air, water, soil, and the devices that keep them steady.",
   applicationName: "AquaHydro",
+  manifest: "/manifest.webmanifest",
   appleWebApp: { capable: true, title: "AquaHydro", statusBarStyle: "black-translucent" },
 };
 

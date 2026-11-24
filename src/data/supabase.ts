@@ -1,8 +1,9 @@
 import "server-only";
 import { createClient } from "@supabase/supabase-js";
+import { DataError } from "./errors";
 import type { Device, GreenhouseRows, Reading, Settings } from "./types";
 
-export class DataError extends Error {}
+export { DataError };
 
 type SettingsRow = {
   greenhouse_name: string;
