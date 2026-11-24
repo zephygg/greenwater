@@ -2,11 +2,9 @@
 
 A phone app for one aquaponics greenhouse: a ranchu tank, grow beds, and the pumps between them. This pass is the first working version. Every screen opens, and the numbers come from the database through a separate data layer.
 
-The last version did the simulator, the rules, and the accounts in the same pass. Those stay out until a later week. The colors, the logo, and the five screens around the greenhouse are the same.
-
 ## Install the APK
 
-`AquaHydro.apk` sits next to this file. It is a debug build for a phone or an emulator, not a Play Store release. The sample greenhouse is packed inside, so the app opens with no server. The anon key is not in the APK. Editing a value in the Supabase console and pressing Refresh is the website, not this file.
+`AquaHydro.apk` can be found in Releases tab, where you can choose a version you need. The sample greenhouse is packed inside, so the app opens with no server. The anon key is not in the APK. Editing a value in the Supabase console and pressing Refresh is the website, not this file.
 
 On Windows, copy `AquaHydro.apk` to the phone and open it. If Android asks, allow install from that source. On an emulator, drag the file onto the emulator window.
 
@@ -31,7 +29,7 @@ Without keys, the app reads the sample greenhouse in `src/data/seed.ts`. The sam
 
 ## Connect Supabase
 
-The brief asks for Firebase or Supabase. Supabase is a Postgres database with a table editor, which is the console you open in the defense.
+The brief asks for Firebase or Supabase. Supabase is a Postgres database with a table editor, which is the console you open in the defense. We use it since its better than just a bare Postgres
 
 1. Create a project at [supabase.com](https://supabase.com).
 2. Open the SQL editor and run `supabase/schema.sql`. That creates the tables and the same sample rows.
