@@ -1,0 +1,52 @@
+@import "tailwindcss";
+
+:root {
+  --background: #0e1712;
+  --foreground: #eaf2ed;
+  --card: #16221b;
+  --card-foreground: #eaf2ed;
+  --primary: #4fb3a9;
+  --primary-foreground: #0e1712;
+  --muted: #1c2a22;
+  --muted-foreground: #93a89e;
+  --accent: #24352c;
+  --accent-foreground: #eaf2ed;
+  --border: #2a3d32;
+  --ring: #4fb3a9;
+  --leaf: #9ed968;
+  --amber: #e8a33d;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-border: var(--border);
+  --color-ring: var(--ring);
+  --color-leaf: var(--leaf);
+  --color-amber: var(--amber);
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-space), var(--font-inter), ui-sans-serif, sans-serif;
+}
+
+body {
+  min-height: 100%;
+  background:
+    radial-gradient(1100px 480px at 0% -10%, rgb(79 179 169 / 0.16), transparent 55%),
+    radial-gradient(900px 420px at 100% 0%, rgb(158 217 104 / 0.08), transparent 50%),
+    var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+}
+
+::selection {
+  background: #4fb3a9;
+  color: #0e1712;
+}
