@@ -1,7 +1,9 @@
 "use client";
 
+import Link from "next/link";
 import { Droplets, Sprout, SunMedium, Thermometer } from "lucide-react";
 import type { ReactNode } from "react";
+import { Button } from "@/components/ui/button";
 import { clock, shift, ZONE_LABEL } from "@/lib/format";
 import { useGreenhouse } from "./provider";
 import type { Reading } from "@/data/types";
@@ -56,7 +58,12 @@ export function MonitorScreen() {
       </div>
       <p className="text-xs text-muted-foreground">Soil moisture is the sensor in the grow-bed media.</p>
       <section className="rounded-3xl bg-card p-4 ring-1 ring-border">
-        <h2 className="text-sm font-semibold">Air temperature, last 8 days</h2>
+        <div className="flex items-center justify-between gap-3">
+          <h2 className="text-sm font-semibold">Air temperature, last 8 days</h2>
+          <Button asChild variant="outline" size="sm">
+            <Link href="/history">History</Link>
+          </Button>
+        </div>
         <div className="mt-3 flex gap-4 text-xs text-muted-foreground">
           <span className="flex items-center gap-1.5">
             <span className="h-0.5 w-4 bg-primary" /> Air

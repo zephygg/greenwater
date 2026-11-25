@@ -20,5 +20,9 @@ const outliers = findOutliers(rows.history, rows.settings);
 assert.ok(outliers.some((item) => item.value === 45 && item.parameter === "Air temperature"));
 assert.ok(outliers.some((item) => item.value === 92 && item.parameter === "Humidity"));
 assert.notEqual(rows.history[rows.history.length - 1].airTemp, 45, "the newest row stays inside range");
+assert.ok(rows.feedings.length >= 3, "the feeding log needs several stored meals");
+assert.ok(rows.feedings.every((row) => row.grams > 0 && row.note.length > 0));
 
-console.log(`seed ok: ${rows.history.length} readings, ${rows.devices.length} devices, ${outliers.length} outliers`);
+console.log(
+  `seed ok: ${rows.history.length} readings, ${rows.devices.length} devices, ${rows.feedings.length} feedings, ${outliers.length} outliers`,
+);

@@ -1,4 +1,4 @@
-import type { Device, GreenhouseRows, Reading, Settings } from "./types";
+import type { Device, Feeding, GreenhouseRows, Reading, Settings } from "./types";
 
 /** Daylight for the sample follows Atyrau, the same zone as src/lib/zone.ts. */
 const ZONE = "Asia/Atyrau";
@@ -57,5 +57,20 @@ export function buildSeed(now: Date): GreenhouseRows {
     const when = new Date(now.getTime() - hoursAgo * 60 * 60 * 1000);
     history.push(readingAt(when, hoursAgo));
   }
-  return { settings: SETTINGS, devices: DEVICES, history };
+  return { settings: SETTINGS, devices: DEVICES, history, feedings: buildFeedings(now) };
+}
+
+/** A few stored feedings. The newest is a few hours ago, so it still falls on today. */
+export function buildFeedings(now: Date): Feeding[] {
+  const at = (hoursAgo: number, grams: number, note: string): Feeding => ({
+    fedAt: new Date(now.getTime() - hoursAgo * 60 * 60 * 1000).toISOString(),
+    grams,
+    note,
+  });
+  return [
+    at(150, 8, "Morning feed. They finished it."),
+    at(78, 8, "Evening feed."),
+    at(30, 10, "A little extra. Watch the water."),
+    at(4, 8, "Morning feed. They finished it."),
+  ];
 }

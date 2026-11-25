@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Bell, BookOpen, LayoutDashboard, SlidersHorizontal, UserRound, type LucideIcon } from "lucide-react";
+import { Bell, Fish, LayoutDashboard, Settings, SlidersHorizontal, type LucideIcon } from "lucide-react";
 import type { ReactNode } from "react";
 import { Button } from "@/components/ui/button";
 import { Logo } from "./logo";
@@ -10,10 +10,10 @@ import { useGreenhouse } from "./provider";
 
 const NAV: { href: string; label: string; icon: LucideIcon }[] = [
   { href: "/devices", label: "Devices", icon: SlidersHorizontal },
-  { href: "/monitor", label: "Monitor", icon: LayoutDashboard },
+  { href: "/monitor", label: "Home", icon: LayoutDashboard },
   { href: "/alerts", label: "Alerts", icon: Bell },
-  { href: "/tips", label: "Tips", icon: BookOpen },
-  { href: "/profile", label: "Profile", icon: UserRound },
+  { href: "/care", label: "Care", icon: Fish },
+  { href: "/settings", label: "Settings", icon: Settings },
 ];
 
 export function Shell({ children }: { children: ReactNode }) {
@@ -49,8 +49,14 @@ export function Shell({ children }: { children: ReactNode }) {
   const title = NAV.find((item) => pathname.startsWith(item.href));
   const heading = pathname.startsWith("/monitor")
     ? data.settings.greenhouseName
-    : (title?.label ?? "AquaHydro");
-  const eyebrow = pathname.startsWith("/monitor") ? "Aquaponics" : data.settings.greenhouseName;
+    : pathname.startsWith("/history")
+      ? "History"
+      : (title?.label ?? "AquaHydro");
+  const eyebrow = pathname.startsWith("/monitor")
+    ? "Dashboard"
+    : pathname.startsWith("/history")
+      ? "Charts"
+      : data.settings.greenhouseName;
 
   return (
     <div className="min-h-dvh md:pl-60">

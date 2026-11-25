@@ -2,6 +2,15 @@ import { ZONE, ZONE_LABEL } from "./zone";
 
 export { ZONE_LABEL };
 
+export function dayKey(iso: string) {
+  return new Intl.DateTimeFormat("en-CA", {
+    timeZone: ZONE,
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).format(new Date(iso));
+}
+
 export function clock(iso: string) {
   return new Intl.DateTimeFormat("en-GB", {
     timeZone: ZONE,

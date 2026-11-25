@@ -1,7 +1,7 @@
 import "server-only";
 import { createClient } from "@supabase/supabase-js";
 import { DataError } from "./errors";
-import type { Device, GreenhouseRows, Reading, Settings } from "./types";
+import type { Device, Feeding, GreenhouseRows, Reading, Settings } from "./types";
 
 export { DataError };
 
@@ -24,6 +24,7 @@ type ReadingRow = {
   moisture: number;
   light: number;
 };
+type FeedingRow = { fed_at: string; grams: number; note: string };
 
 export function isSupabaseConfigured() {
   return Boolean(process.env.SUPABASE_URL && process.env.SUPABASE_ANON_KEY);
@@ -40,16 +41,17 @@ export async function fetchSupabase(): Promise<GreenhouseRows> {
     auth: { persistSession: false, autoRefreshToken: false },
   });
 
-  const [settingsRes, devicesRes, readingsRes] = await Promise.all([
+  const [settingsRes, devicesRes, readingsRes, feedingsRes] = await Promise.all([
     supabase.from("settings").select("*").eq("id", 1).maybeSingle(),
     supabase.from("devices").select("id,name,is_on,position").order("position"),
     supabase
       .from("readings")
       .select("recorded_at,air_temp,humidity,moisture,light")
       .order("recorded_at", { ascending: true }),
+    supabase.from("feedings").select("fed_at,grams,note").order("fed_at", { ascending: true }),
   ]);
 
-  for (const result of [settingsRes, devicesRes, readingsRes]) {
+  for (const result of [settingsRes, devicesRes, readingsRes, feedingsRes]) {
     if (result.error) {
       throw new DataError(
         `Supabase refused the read (${result.error.message}). Check the URL, the anon key, and that supabase/schema.sql has been run.`,
@@ -91,5 +93,11 @@ export async function fetchSupabase(): Promise<GreenhouseRows> {
     throw new DataError("The readings table is empty. Run supabase/schema.sql in the Supabase SQL editor.");
   }
 
-  return { settings, devices, history };
+  const feedings: Feeding[] = ((feedingsRes.data ?? []) as FeedingRow[]).map((row) => ({
+    fedAt: row.fed_at,
+    grams: Number(row.grams),
+    note: row.note,
+  }));
+
+  return { settings, devices, history, feedings };
 }

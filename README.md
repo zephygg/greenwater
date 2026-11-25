@@ -1,10 +1,26 @@
 # AquaHydro
 
-A phone app for one aquaponics greenhouse: a ranchu tank, grow beds, and the pumps between them. This pass is the first working version. Every screen opens, and the numbers come from the database through a separate data layer.
+A phone app for one aquaponics greenhouse: a ranchu tank, grow beds, and the pumps between them.
+
+Weeks 1–3 of the Smart Greenhouse plan:
+
+| Week | What is ready | Where |
+| --- | --- | --- |
+| 1 Idea | Name, user, extra feature, modules, role | `docs/week-1-charter.md` |
+| 2 Design | Colors, screens, data picture, stack, four walks | `docs/week-2-design.md` |
+| 3 App | Every screen opens, and the numbers come from the database | This app, and `AquaHydro.apk` |
+
+## Team
+
+| Name | Role |
+| --- | --- |
+| Aruzhan | Idea, screens, data, and the written plan |
+
+Add a teammate’s name and role here when they join the repository.
 
 ## Install the APK
 
-`AquaHydro.apk` can be found in Releases tab, where you can choose a version you need. The sample greenhouse is packed inside, so the app opens with no server. The anon key is not in the APK. Editing a value in the Supabase console and pressing Refresh is the website, not this file.
+`AquaHydro.apk` sits next to this file. It is a debug build for a phone or an emulator, not a Play Store release. The sample greenhouse is packed inside, so the app opens with no server. The anon key is not in the APK. Editing a value in the Supabase console and pressing Refresh is the website, not this file.
 
 On Windows, copy `AquaHydro.apk` to the phone and open it. If Android asks, allow install from that source. On an emulator, drag the file onto the emulator window.
 
@@ -21,15 +37,15 @@ npm install
 npm run dev
 ```
 
-Open the app on your phone or in a narrow browser window. The bottom bar is the navigation: Devices, Monitor, Alerts, Tips, Profile. The first screen is the door. **Open the greenhouse** goes to Monitor.
+Open the app on your phone or in a narrow browser window. The first screen is the door. **Open the greenhouse** goes to the dashboard. The bottom bar is Devices, Home, Alerts, Care, Settings. **History** sits on the dashboard.
 
-Without keys, the app reads the sample greenhouse in `src/data/seed.ts`. The sample is eight days of readings, five devices, one settings row, a 45 °C air reading, and a 92% humidity reading.
+Without keys, the app reads the sample greenhouse in `src/data/seed.ts`. The sample is eight days of readings, five devices, one settings row, four feedings, a 45 °C air reading, and a 92% humidity reading.
 
 `npm run check` confirms that sample. `npm test` is not a separate suite.
 
 ## Connect Supabase
 
-The brief asks for Firebase or Supabase. Supabase is a Postgres database with a table editor, which is the console you open in the defense. We use it since its better than just a bare Postgres
+The brief asks for Firebase or Supabase. Supabase is a Postgres database with a table editor, which is the console you open in the defense.
 
 1. Create a project at [supabase.com](https://supabase.com).
 2. Open the SQL editor and run `supabase/schema.sql`. That creates the tables and the same sample rows.
@@ -52,11 +68,12 @@ Use the anon key only. This project never uses the service role key.
 | Screen | What it shows |
 | --- | --- |
 | Door | Opens the greenhouse. Accounts are a later week. |
-| Monitor | Air, humidity, soil moisture, and light from the newest reading, plus the air chart. |
+| Dashboard | Air, humidity, soil moisture, and light from the newest reading, plus the air chart. |
 | Devices | Five devices and the stored on/off state. |
+| History | Air and humidity for a day or a week. Open it from the dashboard. |
 | Alerts | Readings outside the ranges in settings, including the 45 °C sample. |
-| Tips | Notes on the nitrogen cycle, ranchu, feeding, and a power cut. |
-| Profile | The settings row: name, language, units, ranges, and how long the history is. |
+| Care | The feeding log, and whether the fish were already fed today. |
+| Settings | The settings row: name, language, units, ranges, and how long the history is. |
 
 ## Data structure
 
@@ -89,6 +106,12 @@ erDiagram
     numeric moisture
     numeric light
   }
+  FEEDINGS {
+    bigint id
+    timestamptz fed_at
+    numeric grams
+    text note
+  }
 ```
 
 | Table | What it holds | This week |
@@ -96,6 +119,7 @@ erDiagram
 | `settings` | One row: name, language, units, and the ranges | Required |
 | `devices` | One row per switch, with on/off | Five rows, three or more required |
 | `readings` | One row per sample: air °C, humidity %, soil moisture %, light klux | Every 6 hours for 8 days, including 45 °C |
+| `feedings` | One row per meal: time, grams, and a note | Four sample meals. Care reads this table. |
 
 The anon key can read these tables and cannot write them. Writes happen in the Supabase table editor, which is the right place for this week's defense.
 
@@ -112,15 +136,9 @@ Screens never talk to Supabase.
 
 ## Stack
 
-- **Next.js, React, and TypeScript.** The phone screens and the data API live in one project, and the app runs in the phone browser. This week does not need an APK.
+- **Next.js, React, and TypeScript.** The phone screens and the data API live in one project. `AquaHydro.apk` is the same screens installed on Android, which is what week 3 asks you to hand in.
 - **Tailwind.** One set of colors and type on every screen: the greenhouse green, the leaf mark, Space Grotesk for titles, Inter for text.
 - **Supabase.** The brief asks for Firebase or Supabase. The data is rows — readings, devices, settings — and the Supabase table editor is the console the defense asks you to open.
-
-## Project Members
-
-- Qamay Arnur - Backend & DB
-- Aruzhan Khismetova - General idea + design
-- Gainidenuly Arslan - Design & backend help
 
 ## Keys
 
@@ -128,16 +146,14 @@ Keys stay in `.env.local`. `.env.example` lists the names and has no values. If 
 
 ## Defense
 
-1. Launch the app and open every screen from the bottom bar.
-2. In Supabase, open Table Editor and show `readings`, `devices`, and `settings`.
-3. Change the newest `air_temp`, or a device `is_on`, or `greenhouse_name`. Refresh the app and show the new value.
-4. Show `src/data/supabase.ts` as the connection, and `.env.local` as the place the keys live. They are not in the repository.
+1. Open `docs/week-1-charter.md` and say the name, the user, and the feeding log.
+2. Open `docs/week-2-design.md` and walk the four paths in the app: dashboard, devices, alerts, then Care and History.
+3. In Supabase, open Table Editor and show `readings`, `devices`, `settings`, and `feedings`.
+4. Change the newest `air_temp`, or a device `is_on`, or a feeding note. Refresh the app and show the new value.
+5. Show `src/data/supabase.ts` as the connection, and `.env.local` as the place the keys live. They are not in the repository.
 
 Spoken answers:
 
 - The app connects in `src/data/supabase.ts`. Screens only call `/api/greenhouse`.
 - History is one row per sample in `readings`, ordered by `recorded_at`. The newest row is the current reading.
 - A key on GitHub is a key anyone can use. The anon key would let people read the greenhouse. A service role key would let them rewrite it.
-
-## Prototype in Figma:
-https://www.figma.com/make/2TmD8qzycOLEbRQsCAlzpo/Ranchu-Greenhouse-Mobile-App?fullscreen=1&t=nthwZ1NzSWs5bSIV-1&code-node-id=0-6

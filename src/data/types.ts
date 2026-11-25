@@ -12,6 +12,12 @@ export type Device = {
   on: boolean;
 };
 
+export type Feeding = {
+  fedAt: string;
+  grams: number;
+  note: string;
+};
+
 export type Settings = {
   greenhouseName: string;
   locale: string;
@@ -37,6 +43,7 @@ export type Greenhouse = {
   current: Reading;
   devices: Device[];
   history: Reading[];
+  feedings: Feeding[];
   outliers: Outlier[];
 };
 
@@ -44,4 +51,5 @@ export type GreenhouseRows = {
   settings: Settings;
   devices: Device[];
   history: Reading[];
+  feedings: Feeding[];
 };

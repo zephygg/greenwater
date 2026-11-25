@@ -11,6 +11,7 @@ export function assemble(rows: GreenhouseRows, source: Greenhouse["source"]): Gr
     current,
     devices: rows.devices,
     history: rows.history,
+    feedings: rows.feedings,
     outliers: findOutliers(rows.history, rows.settings),
   };
 }

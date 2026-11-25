@@ -1,5 +1,5 @@
-import { TipsScreen } from "@/components/tips-screen";
+import { CareScreen } from "@/components/care-screen";
 
 export default function Page() {
-  return <TipsScreen />;
+  return <CareScreen />;
 }

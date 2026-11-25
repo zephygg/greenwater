@@ -1,8 +1,10 @@
--- AquaHydro, week 2. One greenhouse, three tables.
+-- AquaHydro. One greenhouse.
 -- Run this whole file in the Supabase SQL editor. It replaces the tables.
 -- The numbers match src/data/seed.ts: a row every 6 hours for 8 days,
 -- with air at 45 °C (48 hours ago) and humidity at 92% (72 hours ago).
+-- feedings holds the extra feature: when the fish were fed.
 
+drop table if exists feedings;
 drop table if exists readings;
 drop table if exists devices;
 drop table if exists settings;
@@ -37,15 +39,24 @@ create table readings (
 
 create index readings_recorded_at on readings (recorded_at);
 
+create table feedings (
+  id bigint generated always as identity primary key,
+  fed_at timestamptz not null,
+  grams numeric not null,
+  note text not null
+);
+
 alter table settings enable row level security;
 alter table devices enable row level security;
 alter table readings enable row level security;
+alter table feedings enable row level security;
 
 create policy "read settings" on settings for select to anon, authenticated using (true);
 create policy "read devices" on devices for select to anon, authenticated using (true);
 create policy "read readings" on readings for select to anon, authenticated using (true);
+create policy "read feedings" on feedings for select to anon, authenticated using (true);
 
-grant select on settings, devices, readings to anon, authenticated;
+grant select on settings, devices, readings, feedings to anon, authenticated;
 
 insert into settings (
   id, greenhouse_name, locale, units,
@@ -74,3 +85,9 @@ select
     else 0
   end
 from generate_series(0, 192, 6) as h;
+
+insert into feedings (fed_at, grams, note) values
+  (now() - make_interval(hours => 150), 8, 'Morning feed. They finished it.'),
+  (now() - make_interval(hours => 78), 8, 'Evening feed.'),
+  (now() - make_interval(hours => 30), 10, 'A little extra. Watch the water.'),
+  (now() - make_interval(hours => 4), 8, 'Morning feed. They finished it.');
