@@ -138,3 +138,6 @@ Spoken answers:
 - The app connects in `src/data/supabase.ts`. Screens only call `/api/greenhouse`.
 - History is one row per sample in `readings`, ordered by `recorded_at`. The newest row is the current reading.
 - A key on GitHub is a key anyone can use. The anon key would let people read the greenhouse. A service role key would let them rewrite it.
+
+## Prototype in Figma:
+https://www.figma.com/make/2TmD8qzycOLEbRQsCAlzpo/Ranchu-Greenhouse-Mobile-App?fullscreen=1&t=nthwZ1NzSWs5bSIV-1&code-node-id=0-6
