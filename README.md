@@ -116,6 +116,12 @@ Screens never talk to Supabase.
 - **Tailwind.** One set of colors and type on every screen: the greenhouse green, the leaf mark, Space Grotesk for titles, Inter for text.
 - **Supabase.** The brief asks for Firebase or Supabase. The data is rows — readings, devices, settings — and the Supabase table editor is the console the defense asks you to open.
 
+## Project Members
+
+- Qamay Arnur - Backend & DB
+- Aruzhan Khismetova - General idea + design
+- Gainidenuly Arslan - Design & backend help
+
 ## Keys
 
 Keys stay in `.env.local`. `.env.example` lists the names and has no values. If the anon key were committed, anyone could read the greenhouse tables. If the service role key were committed, anyone could change or delete them. Neither belongs on GitHub.
