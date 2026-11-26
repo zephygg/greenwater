@@ -14,9 +14,10 @@ Weeks 1–3 of the Smart Greenhouse plan:
 
 | Name | Role |
 | --- | --- |
-| Aruzhan | Idea, screens, data, and the written plan |
+| Aruzhan | Idea, screens, design, and the written plan |
+| Arnur | DB, backend |
+| Arslan | Frontend, some help with backend |
 
-Add a teammate’s name and role here when they join the repository.
 
 ## Install the APK
 
