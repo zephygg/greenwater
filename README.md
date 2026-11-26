@@ -137,7 +137,7 @@ Screens never talk to Supabase.
 
 ## Stack
 
-- **Next.js, React, and TypeScript.** The phone screens and the data API live in one project. `AquaHydro.apk` is the same screens installed on Android, which is what week 3 asks you to hand in.
+- **Next.js, React, and TypeScript.** The phone screens and the data API live in one project. `AquaHydro.apk` is the same screens installed on Android, which is what week 3 asks us to hand in.
 - **Tailwind.** One set of colors and type on every screen: the greenhouse green, the leaf mark, Space Grotesk for titles, Inter for text.
 - **Supabase.** The brief asks for Firebase or Supabase. The data is rows — readings, devices, settings — and the Supabase table editor is the console the defense asks you to open.
 
